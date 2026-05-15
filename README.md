@@ -1,189 +1,313 @@
-<img src="https://cdn.prod.website-files.com/677c400686e724409a5a7409/6790ad949cf622dc8dcd9fe4_nextwork-logo-leather.svg" alt="NextWork" width="300" />
+# 🪙 Token Balance API
 
-# Containerize a Blockchain API with Docker
+A containerized REST API that reads live ERC-20 token data from the Ethereum blockchain. Built with Node.js and Express, containerized with Docker, tested with automated CI/CD via GitHub Actions, and deployed to Render.
 
-**Project Link:** [View Project](https://learn.nextwork.org/projects/1a8cf2b8-1bc8-4ca9-8a8f-d37b239f7881)
-
-**Author:** Hamza Aziz  
-**Email:** hamzaaziz5874@gmail.com
+![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)
+![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=github-actions&logoColor=white)
+![Ethereum](https://img.shields.io/badge/Ethereum-Mainnet-3C3C3D?logo=ethereum&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
 
-![Image](https://learn.nextwork.org/curious_white_noble_basil/uploads/1a8cf2b8-1bc8-4ca9-8a8f-d37b239f7881_ga5qc7um)
-
-## Project Vision: Blockchain API Infrastructure
-
-### What this project builds and why it matters
-
-In this project, you will build a REST API that reads ERC-20 token data from the Ethereum blockchain, package it inside a Docker container, automate testing and builds with a CI/CD pipeline, and deploy it live to the internet.
-
-## Setting Up the Development Environment
-
-### Docker Desktop and project scaffold
-
-Install Docker Desktop with the WSL 2 backend.
-
-Create the project folder and install dependencies.
-
-Set up the file and folder structure for your API.
-
-![Image](https://learn.nextwork.org/curious_white_noble_basil/uploads/1a8cf2b8-1bc8-4ca9-8a8f-d37b239f7881_848wiokn)
-
-### Core dependencies and their roles
-
-express@5.2.1 is the web framework that handles HTTP requests and routing for your API.
-
-
-
-ethers@6.16.0 is the library for connecting to the Ethereum blockchain and interacting with smart contracts.
-
-
-
-dotenv@16.5.0 loads environment variables from a .env file into your app. This keeps config like RPC URLs out of your source code.
-
-## Building the Blockchain Service and REST API
-
-### Connecting to Ethereum with ethers.js
-
-Write a blockchain service that reads ERC-20 token data from Ethereum.
-
-Create API routes that expose token data over HTTP.
-
-Wire up the Express server and verify it runs locally.
-
-### Exported service functions
-
-getTokenBalance returns the balance of a wallet wrt to the token, getTokenInfo gets the info of the token
-
-![Image](https://learn.nextwork.org/curious_white_noble_basil/uploads/1a8cf2b8-1bc8-4ca9-8a8f-d37b239f7881_580kowjm)
-
-## Writing Tests and Containerizing with Docker
-
-### Test setup and Dockerfile creation
-
-Write a health check test and run it with Jest.
-
-Create a Dockerfile to containerize your API.
-
-Build and run the Docker container locally.
-
-### Understanding dynamic port assignment in tests
-
-server on port 0, which tells the OS to pick any available port. This avoids conflicts with other processes.
-
-### Docker layer caching strategy
-
-The main advantage of copying package.json before your source code is dramatically faster build times by leveraging Docker's layer caching.Docker builds images in layers, and each instruction (like COPY or RUN) creates a new layer. When you rebuild an image:Cache Invalidation: If any file in a COPY instruction has changed, Docker invalidates the cache for that layer and every layer that follows it.Separation of Concerns: Source code changes frequently, but dependencies change rarely. By copying only the package.json and package-lock.json first, you create a "dependencies layer".
-
-![Image](https://learn.nextwork.org/curious_white_noble_basil/uploads/1a8cf2b8-1bc8-4ca9-8a8f-d37b239f7881_slbwx6of)
-
-## Automating CI/CD with GitHub Actions
-
-### Setting up the automated pipeline
-
-Push your project to a public GitHub repository.
-
-Create a GitHub Actions workflow that runs tests and builds your Docker image.
-
-Verify the pipeline triggers automatically on every push.
-
-![Image](https://learn.nextwork.org/curious_white_noble_basil/uploads/1a8cf2b8-1bc8-4ca9-8a8f-d37b239f7881_lurzfk55)
-
-### What the pipeline does on every push
-
-CI (Continuous Integration) — Automatically builds and tests your code on every push. Catches bugs before they reach production.
-
-
-
-CD (Continuous Deployment/Delivery) — Automatically deploys your code to a live server after CI passes. No manual steps needed.
-
-Think of it as an assembly line: you push code → it gets built → tested → deployed, all without you lifting a finger. 
-
-## Deploying a Live API on Render
-
-### Connecting GitHub to Render for auto-deployment
-
-Create a Render account and connect your GitHub repos.
-
-Deploy your API as a Docker-based web service on Render's free tier.
-
-Test your live API endpoints with a real ERC-20 token address.
-
-![Image](https://learn.nextwork.org/curious_white_noble_basil/uploads/1a8cf2b8-1bc8-4ca9-8a8f-d37b239f7881_mc59yswq)
-
-### Live deployment URL
-
-My deployed health endpoint URL is https://token-balance-api-6xxo.onrender.com/health
-
-## Secret Mission: Deploying a Custom Sepolia Contract
-
-### Providers vs signers for read and write operations
-
-## Reflections and Key Takeaways
-
-### Tools and concepts mastered
-
-Key Tools
-
-
-
-
-
-Node.js + Express — Built a REST API with routes, services, and a health endpoint
-
-
-
-ethers.js — Connected to the Ethereum blockchain to read live ERC-20 token data
-
-
-
-Docker — Containerized your app so it runs consistently anywhere
-
-
-
-GitHub Actions — Set up a CI pipeline that automatically tests your code on every push
-
-
-
-Render — Deployed your API to a live public URL
-
-
-
-Git — Version control with staging, committing, and pushing to remote repos
-
-Key Lessons
-
-
-
-
-
-Separation of concerns — Splitting your code into routes/ (what the API responds to) and services/ (how the work gets done)
-
-
-
-RPC reliability matters — Public endpoints can be flaky; knowing how to swap providers is a real-world skill
-
-
-
-Docker permissions — You tackled Docker daemon permission issues with usermod -aG docker
-
-
-
-GitHub PAT scopes — Learned that pushing workflow files requires the workflow scope on your Personal Access Token
-
-
-
-CI/CD mindset — Automating your build → test → deploy pipeline so
-
-
-### Time and challenges
-
-1 hour
-
-### Learning goals and next steps
-
-Thanks
+## 📋 Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Environment Variables](#environment-variables)
+  - [Running Locally](#running-locally)
+- [API Endpoints](#api-endpoints)
+- [Docker](#docker)
+- [CI/CD Pipeline](#cicd-pipeline)
+- [Deployment](#deployment)
+- [Project Structure](#project-structure)
+- [Lessons Learned](#lessons-learned)
+- [License](#license)
 
 ---
 
-*Built with [NextWork](https://learn.nextwork.org) - [View this project](https://learn.nextwork.org/projects/1a8cf2b8-1bc8-4ca9-8a8f-d37b239f7881)*
+## Overview
+
+Token Balance API is a backend service that connects to the Ethereum blockchain and exposes ERC-20 token data through simple HTTP endpoints. Instead of interacting directly with smart contracts, users can query token metadata and wallet balances via clean REST API calls.
+
+**Live Demo:** [https://token-balance-api-6xxo.onrender.com/health](https://token-balance-api-6xxo.onrender.com/health)
+
+---
+
+## Features
+
+- 🔗 **Live Blockchain Data** — Reads real-time ERC-20 token metadata (name, symbol, decimals) directly from Ethereum mainnet
+- 💰 **Wallet Balance Lookup** — Query any wallet's token balance for any ERC-20 contract
+- 🐳 **Dockerized** — Fully containerized for consistent, portable deployment
+- ⚡ **Parallel Queries** — Uses `Promise.all()` for concurrent contract calls, reducing response times
+- 🧪 **Automated Testing** — CI pipeline runs tests on every push via GitHub Actions
+- 🚀 **Cloud Deployed** — Live on Render with health monitoring
+- 🏗️ **Clean Architecture** — Separation of concerns with dedicated routes and services layers
+
+---
+
+## Architecture
+
+```
+Client Request
+      │
+      ▼
+┌─────────────┐
+│   Express    │   ← Routes layer (src/routes/)
+│   Router     │     Handles HTTP requests & error responses
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│  Blockchain  │   ← Service layer (src/services/)
+│   Service    │     Business logic & Ethereum interaction
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│  Ethereum    │   ← External dependency
+│  RPC Node   │     ethers.js connects via JSON-RPC
+└─────────────┘
+```
+
+---
+
+## Tech Stack
+
+| Category       | Technology                          |
+|----------------|-------------------------------------|
+| **Runtime**    | Node.js 18+                         |
+| **Framework**  | Express.js                          |
+| **Blockchain** | ethers.js v6, Ethereum Mainnet      |
+| **Container**  | Docker                              |
+| **CI/CD**      | GitHub Actions                      |
+| **Deployment** | Render                              |
+| **Config**     | dotenv                              |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [Docker](https://www.docker.com/) (optional, for containerized setup)
+- [Git](https://git-scm.com/)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/hamzaaziz1/token-balance-api.git
+cd token-balance-api
+
+# Install dependencies
+npm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+PORT=3000
+ETHEREUM_RPC_URL=https://rpc.ankr.com/eth
+```
+
+> **Note:** The public RPC works for development. For production, consider using
+> [Alchemy](https://www.alchemy.com/) or [Infura](https://www.infura.io/) for
+> better reliability.
+
+### Running Locally
+
+```bash
+node src/index.js
+```
+
+You should see:
+
+```
+Token Balance API running on port 3000
+```
+
+Verify it's working:
+
+```bash
+curl http://localhost:3000/health
+# → {"status":"ok"}
+```
+
+---
+
+## API Endpoints
+
+### Health Check
+
+```
+GET /health
+```
+
+**Response:**
+```json
+{
+  "status": "ok"
+}
+```
+
+---
+
+### Get Token Info
+
+```
+GET /api/token/:address
+```
+
+Returns metadata for any ERC-20 token contract.
+
+**Example:**
+```bash
+curl http://localhost:3000/api/token/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
+```
+
+**Response:**
+```json
+{
+  "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+  "name": "USD Coin",
+  "symbol": "USDC",
+  "decimals": 6
+}
+```
+
+---
+
+### Get Token Balance
+
+```
+GET /api/token/:tokenAddress/balance/:walletAddress
+```
+
+Returns the token balance for a specific wallet address.
+
+**Example:**
+```bash
+curl http://localhost:3000/api/token/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/balance/0x47ac0Fb4F2D84898e4D9E7b4DaB3C24507a6D503
+```
+
+**Response:**
+```json
+{
+  "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+  "walletAddress": "0x47ac0Fb4F2D84898e4D9E7b4DaB3C24507a6D503",
+  "symbol": "USDC",
+  "balance": "1250000.50",
+  "rawBalance": "1250000500000"
+}
+```
+
+---
+
+## Docker
+
+### Build the image
+
+```bash
+docker build -t token-balance-api .
+```
+
+### Run the container
+
+```bash
+docker run -p 3000:3000 --env-file .env token-balance-api
+```
+
+### Verify
+
+```bash
+curl http://localhost:3000/health
+# → {"status":"ok"}
+```
+
+---
+
+## CI/CD Pipeline
+
+The project uses **GitHub Actions** for continuous integration. On every push to `main`:
+
+1. ✅ Checks out the code
+2. ✅ Sets up Node.js
+3. ✅ Installs dependencies
+4. ✅ Runs automated tests
+5. ✅ Builds the Docker image
+
+The workflow is defined in `.github/workflows/ci.yml`.
+
+---
+
+## Deployment
+
+The API is deployed on **Render** as a Web Service.
+
+**Live URL:** `https://token-balance-api-6xxo.onrender.com`
+
+### Deploy your own:
+
+1. Push the repo to GitHub
+2. Create a new **Web Service** on [Render](https://render.com)
+3. Connect your GitHub repository
+4. Set the following:
+   - **Build Command:** `npm install`
+   - **Start Command:** `node src/index.js`
+   - **Environment Variable:** `ETHEREUM_RPC_URL` = your preferred RPC URL
+5. Deploy 🚀
+
+> **Note:** Render automatically sets the `PORT` environment variable.
+
+---
+
+## Project Structure
+
+```
+token-balance-api/
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # GitHub Actions CI pipeline
+├── src/
+│   ├── routes/
+│   │   └── token.js            # API endpoint definitions
+│   ├── services/
+│   │   └── blockchain.js       # Ethereum blockchain interaction logic
+│   └── index.js                # Express server entry point
+├── .env                        # Environment variables (not committed)
+├── .gitignore
+├── Dockerfile                  # Container configuration
+├── package.json
+├── package-lock.json
+└── README.md
+```
+
+---
+
+## Lessons Learned
+
+- **Separation of Concerns** — Structuring code into routes (HTTP handling) and services (business logic) makes the codebase maintainable and testable
+- **RPC Reliability** — Public Ethereum RPC endpoints can be unreliable; having fallback providers is essential for production
+- **Docker Permissions** — Linux Docker daemon requires user group configuration (`usermod -aG docker $USER`)
+- **GitHub PAT Scopes** — Pushing workflow files to `.github/workflows/` requires the `workflow` scope on Personal Access Tokens
+- **CI/CD Value** — Automating build → test → deploy catches bugs early and removes manual deployment steps
+- **Environment Configuration** — Using `dotenv` and environment variables keeps secrets out of code and makes deployment flexible
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Built with ☕ by [Hamza Aziz](https://github.com/hamzaaziz1)
